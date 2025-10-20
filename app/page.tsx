@@ -1,10 +1,11 @@
 import React from "react";
 import UserLayout from "./_components/UserLayout";
+import SignUp from "@/components/auth/signUp";
 
 const HomePage = () => {
   return (
     <div>
-      <UserLayout></UserLayout>
+      <SignUp></SignUp>
     </div>
   );
 };

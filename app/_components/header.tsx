@@ -6,7 +6,7 @@ const Userheader = () => {
       <div className="flex justify-between">
         <div className="flex items-center">
           <img className="w-[36px] h-[29px] mr-[8px]" src="NOMNOM.png" />
-          <div>
+          <div className="text-white">
             <div className="font-semibold">NomNom</div>
             <div className="text-[12px]">Swift Delivery</div>
           </div>
