@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { any, z } from "zod";
+import { any, email, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,7 +22,7 @@ const formSchema = z.object({
 
 export const SignIn = () => {
   const [loading, setLoading] = useState(false);
-
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: { email: "", password: "" },
@@ -38,8 +38,11 @@ export const SignIn = () => {
     });
 
     const data = await result.json();
-
+    if (data.success) {
+      localStorage.setItem("userEmail", data.user.email);
+    }
     alert("Success log in: " + data.user.email);
+    router.push("Homepage");
   }
 
   return (
