@@ -22,8 +22,9 @@ const formSchema = z.object({
   confirmPassword: z.string().min(6).max(10),
 });
 
-export const SignUpPassword = () => {
+export const SignUpPassword = ({ email }: { email: string }) => {
   const [isPassword, setIsPassword] = useState("password");
+  const [loading, setLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -34,20 +35,20 @@ export const SignUpPassword = () => {
   });
 
   const togglePassword = () => {
-    setIsPassword((prev) => {
-      if (prev === "password") {
-        return "text";
-      } else {
-        return "password";
-      }
-    });
+    setIsPassword((prev) => (prev === "password" ? "text" : "password"));
   };
 
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setLoading(true);
+
+    const users = await fetch("http://localhost:4000/api/signUp", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email,
+        password: values.password,
+      }),
+    });
   }
 
   return (
@@ -93,7 +94,7 @@ export const SignUpPassword = () => {
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <Button type="submit"> {loading ? "Submit..." : "Submit"}</Button>
         </form>
       </Form>
     </div>

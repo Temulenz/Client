@@ -15,8 +15,8 @@ export default function SignUp() {
   };
 
   return (
-    <main className="flex ">
-      <div className="ml-[246px]">
+    <main className="flex justify-center ">
+      <div className="py-[246px]">
         <StepComponents
           email={email}
           setEmail={setEmail}

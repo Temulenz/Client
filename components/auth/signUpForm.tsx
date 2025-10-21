@@ -19,7 +19,17 @@ const formSchema = z.object({
   email: z.email(),
 });
 
-export const SignUpForm = ({ email, setEmail, handleNextStep }: any) => {
+interface SignUpFormProps {
+  email: string;
+  setEmail: React.Dispatch<React.SetStateAction<string>>;
+  handleNextStep: () => void;
+}
+
+export const SignUpForm = ({
+  email,
+  setEmail,
+  handleNextStep,
+}: SignUpFormProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -27,15 +37,13 @@ export const SignUpForm = ({ email, setEmail, handleNextStep }: any) => {
     },
   });
 
-  // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
     setEmail(values.email);
     handleNextStep();
   }
 
   return (
-    <div className="border rounded-xl max-w-2xl">
+    <div className="w-[416px] ">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <FormField
@@ -57,9 +65,15 @@ export const SignUpForm = ({ email, setEmail, handleNextStep }: any) => {
               </FormItem>
             )}
           />
-          <Button type="submit">Let's go</Button>
+          <Button className="w-[416px]" type="submit">
+            Let's go
+          </Button>
         </form>
       </Form>
+      <div className="flex justify-center py-4">
+        <div>Already have an account?</div>
+        <div className="ml-4 text-blue-600">Log in</div>
+      </div>
     </div>
   );
 };

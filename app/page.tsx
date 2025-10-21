@@ -1,11 +1,11 @@
 import React from "react";
 import UserLayout from "./_components/UserLayout";
-import SignUp from "@/components/auth/signUp";
+import { SignIn } from "@/components/auth/signIn";
 
 const HomePage = () => {
   return (
     <div>
-      <SignUp></SignUp>
+      <SignIn></SignIn>
     </div>
   );
 };
