@@ -31,7 +31,7 @@ export const SignIn = () => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
 
-    const result = await fetch("http://localhost:4000/api/signIn", {
+    const result = await fetch("https://be-seven-blond.vercel.app/api/signIn", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
@@ -39,8 +39,8 @@ export const SignIn = () => {
 
     const data = await result.json();
     if (data.success) {
-      localStorage.setItem("userEmail", data.user.email);
     }
+    localStorage.setItem("userEmail", data.user.email);
     alert("Success log in: " + data.user.email);
     router.push("Homepage");
   }
