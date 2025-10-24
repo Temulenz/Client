@@ -21,18 +21,19 @@ const UserFoodContainer = () => {
   const [categories, setCategories] = useState<Categor[]>([]);
   const [cartCount, setCartCount] = useState(0);
 
-  const handleAddToCart = () => {
-    setCartCount((prev) => prev + 1);
+  const hanldeAddToCart = (food: Food) => {
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    cart.push(food);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    setCartCount(cart.length);
+    alert(`${food.name} added to cart`);
   };
-
   const getCategories = async () => {
     const result = await fetch(
       "https://be-seven-blond.vercel.app/api/addCategory"
     );
     const responseData = await result.json();
-    console.log({ responseData });
     const { data } = responseData;
-    console.log(data);
     setCategories(data);
   };
 
@@ -45,8 +46,10 @@ const UserFoodContainer = () => {
   useEffect(() => {
     getCategories();
     getFoods();
+
+    const Cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    setCartCount(Cart.length);
   }, []);
-  console.log({ foods });
 
   return (
     <div>
@@ -61,7 +64,7 @@ const UserFoodContainer = () => {
                 .filter((food) => food.categoryId._id === categor._id)
                 .map((food) => (
                   <UserFoodCard
-                    onAddToCart={handleAddToCart}
+                    onAddToCart={() => hanldeAddToCart(food)}
                     key={food._id}
                     food={food}
                   />

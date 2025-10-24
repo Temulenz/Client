@@ -27,7 +27,7 @@ const UserFoodCard = ({ food, onAddToCart }: Props) => {
         <img className="w-[365px] h-[210px]" src={food.imageUrl} />
         <button
           onClick={onAddToCart}
-          className="border absolute top-40 right-9 py-3.5 px-3.5 rounded-full bg-white"
+          className="border absolute top-37 right-5 py-3.5 px-3.5 rounded-full bg-white"
         >
           <FaPlus className="text-red-500" />
         </button>
